@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Task } from "./task.model";
 
 @Injectable()
@@ -13,7 +13,10 @@ export class TasksService {
     const task = this.tasks.find((task) => task.id === id);
 
     if (!task) {
-      throw new NotFoundException(`Task with ID "${id}" not found`);
+      throw new HttpException(
+        `Task with ID "${id}" not found`,
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     return task;
@@ -31,7 +34,10 @@ export class TasksService {
     const taskIndex = this.tasks.findIndex((task) => task.id === id);
 
     if (taskIndex === -1) {
-      throw new NotFoundException(`Task with ID "${id}" not found`);
+      throw new HttpException(
+        `Task with ID "${id}" not found`,
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     this.tasks[taskIndex] = { id, ...update };
@@ -41,6 +47,14 @@ export class TasksService {
 
   deleteTask(id: string): Task {
     const taskIndex = this.tasks.findIndex((task) => task.id === id);
+
+    if (taskIndex === -1) {
+      throw new HttpException(
+        `Task with ID "${id}" not found`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
     const task = this.tasks[taskIndex];
     this.tasks.splice(taskIndex, 1);
 
