@@ -17,6 +17,5 @@ export class RolesGuard implements CanActivate {
     }
 
     return true;
-    // return req.headers["x-role"] === "admin";
   }
 }
