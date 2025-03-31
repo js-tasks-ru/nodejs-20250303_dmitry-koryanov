@@ -7,6 +7,7 @@ import {
 
 import { Response } from "express";
 import * as fs from "node:fs";
+import { ERROR_LOG_FILE_PATH } from "../configs/config";
 
 @Catch(Error)
 export class HttpErrorFilter implements ExceptionFilter {
@@ -28,6 +29,9 @@ export class HttpErrorFilter implements ExceptionFilter {
       timestamp: now,
     });
 
-    fs.appendFileSync("errors.log", `[${now}] ${statusCode} - ${message}\n`);
+    fs.appendFileSync(
+      ERROR_LOG_FILE_PATH,
+      `[${now}] ${statusCode} - ${message}\n`,
+    );
   }
 }

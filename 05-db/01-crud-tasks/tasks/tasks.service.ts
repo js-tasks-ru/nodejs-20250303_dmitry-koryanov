@@ -34,7 +34,7 @@ export class TasksService {
   }
 
   async update(id: number, updateTaskDto: UpdateTaskDto) {
-    const task = new Task();
+    const task = await this.findOne(id);
 
     task.title = updateTaskDto.title;
     task.description = updateTaskDto.description;

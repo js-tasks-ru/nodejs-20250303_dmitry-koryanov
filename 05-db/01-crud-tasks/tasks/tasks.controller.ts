@@ -16,11 +16,6 @@ import { UpdateTaskDto } from "./dto/update-task.dto";
 export class TasksController {
   constructor(private readonly taskService: TasksService) {}
 
-  // @Post()
-  // create(@Body() task: Partial<Task>): Promise<Task> {
-  //   return this.taskService.create(task);
-  // }
-
   @Post()
   create(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
     return this.taskService.create(createTaskDto);
@@ -35,11 +30,6 @@ export class TasksController {
   findOne(@Param("id") id: number): Promise<Task> {
     return this.taskService.findOne(id);
   }
-
-  // @Patch(":id")
-  // update(@Param("id") id: number, @Body() task: Partial<Task>): Promise<Task> {
-  //   return this.taskService.update(id, task);
-  // }
 
   @Patch(":id")
   update(
