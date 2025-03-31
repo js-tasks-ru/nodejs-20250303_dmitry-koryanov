@@ -7,6 +7,6 @@ import { LoggingMiddleware } from "./middlewares/logging.middleware";
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggingMiddleware);
+    consumer.apply(LoggingMiddleware).forRoutes("*");
   }
 }
