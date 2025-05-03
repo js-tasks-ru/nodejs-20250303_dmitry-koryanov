@@ -1,16 +1,23 @@
-import { Controller, Get, Request } from "@nestjs/common";
+import { Controller, Get, Request, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
+import { GoogleOAuthGuard } from "./google-oauth.guard";
+import { Public } from "./public.decorator";
+import { JwtGuard } from "./jwt.guard";
 
 @Controller("auth")
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  @Public()
   @Get("google")
+  @UseGuards(GoogleOAuthGuard)
   google() {
     return "ok";
   }
 
+  @Public()
   @Get("google/callback")
+  @UseGuards(GoogleOAuthGuard)
   async googleCallback(@Request() req) {
     const result = await this.authService.login(req.user);
 
@@ -35,6 +42,7 @@ export class AuthController {
   }
 
   @Get("profile")
+  @UseGuards(JwtGuard)
   profile(@Request() request) {
     return request.user;
   }
