@@ -19,7 +19,7 @@ jobs:
         with:
           mongodb-version: "8.0"
 
-      - run: npm install
+      - run: npm install --legacy-peer-deps
 
       - run: npm test --silent
         env:
