@@ -14,9 +14,12 @@ export class AuthService {
 
   async login(user: User) {
     const token = await this.generateAccessToken(user);
-    // const refreshToken = await this.generateRefreshToken(user);
 
-    // await this.usersService.saveRefreshToken(user.id, refreshToken);
+    const existingUser = await this.usersService.findOne(user.id);
+
+    if (!existingUser) {
+      await this.usersService.create(user);
+    }
 
     return { token: token };
   }

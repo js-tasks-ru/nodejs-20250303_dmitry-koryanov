@@ -15,8 +15,8 @@ import { GoogleStrategy } from "./passport/google.strategy";
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        secret: configService.get("jwt.secret"),
-        signOptions: configService.get("jwt.signOptions"),
+        secret: "killer-is-jim",
+        signOptions: { expiresIn: "5h" },
         global: true,
       }),
     }),
